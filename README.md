@@ -1,7 +1,12 @@
 - Create React App
 - Configured TailwindCSS
+- Routing of App
 - Header
 - Login Form
+- Form Validation (useRef Hook)
+- Firebase Setup
+- Deployed app to production
+- Create Sign Up User Account in Firebase
 
 # Features
 
