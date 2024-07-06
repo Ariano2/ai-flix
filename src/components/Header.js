@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { addUser, removeUser } from '../utils/userSlice';
+import { userIcon } from '../utils/constants';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
@@ -30,6 +31,8 @@ const Header = () => {
         navigate('/');
       }
     });
+    // unsubscribe when component unmounts
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -37,11 +40,9 @@ const Header = () => {
       <img src={companyLogo} alt="Logo" className="w-44" />
       {user && (
         <div className="flex gap-4 items-center">
-          <span>Hello {user?.displayName}</span>
+          <span className="text-white">Hello {user?.displayName}</span>
           <img
-            src={
-              'https://occ-0-2159-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABUMx6z-7bB7tyN-OZXt6i8BXuZHN5EWBr7MQy7ilhubrpI2yOofVtT-QmoO6VJt7I1ewosmuQa29BGFfOOVcJxdKx1sT-co.png?r=201'
-            }
+            src={userIcon}
             alt="User Icon"
             className="cursor-pointer w-12 h-12"
           />
