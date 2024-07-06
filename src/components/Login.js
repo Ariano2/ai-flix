@@ -7,7 +7,6 @@ import {
 } from 'firebase/auth';
 import Header from './Header';
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
@@ -18,7 +17,6 @@ const Login = () => {
   const password = useRef(null);
   const displayName = useRef(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const handleBtnClick = () => {
     const message = validateDetails(
       email.current.value,
@@ -44,7 +42,6 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
-              navigate('/browse');
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -63,7 +60,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           // Signed in
-          navigate('/browse');
         })
         .catch((error) => {
           const errorCode = error.code;
