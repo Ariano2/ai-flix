@@ -21,24 +21,32 @@
 - Update store with trailer video data
 - Embedded Youtube Video (autoplay and mute)
 - Build Secondary Component
+- GPT Search Bar Created
+- Multi Language Support in Gpt Search Bar
 
 # Features
 
 - Home (Not Logged In User)
 
   - Login/Sign Up
+
     - Sign In/Sign Up Form
     - redirects to Browse Page
 
 - Browse (After Authentication)
 
   - Header
+
+    - Translate Page (only available in GptSearchBar Component)
+
   - Main Movie
+
     - Trailer in Background
     - Title & Description
     - Movie Suggestions
       - Movie Lists \* N
 
 - AI-Flix
+
   - Search Bar
   - Movie Suggestions
