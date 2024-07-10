@@ -20,7 +20,6 @@ const GptSearchBar = () => {
     return json.results;
   };
   const handleGptSearchClick = async () => {
-    console.log(searchText.current.value);
     // make call to open ai api and get the movie results
     const gptQuery =
       'Act as a Movie Recommendation system and suggest some movies for the query : ' +
@@ -33,11 +32,9 @@ const GptSearchBar = () => {
     if (!gptResults.choices) {
       // error handling
     }
-    console.log(gptResults.choices?.[0]?.message?.content);
     const gptMovies = gptResults.choices?.[0]?.message?.content.split(', ');
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
     const tmdbResults = await Promise.all(promiseArray);
-    console.log(tmdbResults);
     dispatch(
       addGptMovieResults({ movieNames: gptMovies, movieResults: tmdbResults })
     );

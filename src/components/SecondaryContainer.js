@@ -1,8 +1,6 @@
 import React from 'react';
 import MovieList from './MovieList';
 import { useDispatch, useSelector } from 'react-redux';
-import GenreMovieList from './GenreMovieList';
-import useGenreMovies from '../hooks/useGenreMovies';
 import { options } from '../utils/constants';
 import { useEffect } from 'react';
 import { addMoviesByGenre } from '../utils/movieSlice';
@@ -20,7 +18,7 @@ const SecondaryContainer = () => {
     return json;
   };
   useEffect(() => {
-    if (movies.genre === null) {
+    if (movies.genre === null || movies.moviesByGenre?.length === 19) {
       return;
     }
     const promisesArray = movies.genre.genres.map((genre) =>
