@@ -10,7 +10,8 @@ export const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MGU4MGEwMjZhZDQ0YjViMDM2OWFmYjU5ZDQyNzBjOSIsIm5iZiI6MTcyMDI2NTE4MC43MDYyMDgsInN1YiI6IjY2ODkyNTdmNmQ4Y2UwZjE0MjllZGVjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MVQXFWOT0Ts0uxEMFnF-PPcH2QKK2GTt2tFpakzYous',
+    Authorization: 'Bearer ' + process.env.REACT_APP_TMDB_KEY,
   },
 };
+
+export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;

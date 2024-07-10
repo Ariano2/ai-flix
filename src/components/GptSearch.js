@@ -6,7 +6,7 @@ import { posterBG } from '../utils/constants';
 const Gpt = () => {
   return (
     <div>
-      <div className="absolute -z-10">
+      <div className="fixed -z-10">
         <img src={posterBG} alt="movie posters background" />
       </div>
       <GptSearchBar />

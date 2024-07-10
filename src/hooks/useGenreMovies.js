@@ -11,7 +11,8 @@ const useGenreMovies = (id) => {
       options
     );
     const json = await data.json();
-    dispatch(addMoviesByGenre(json));
+    return json;
+    // dispatch(addMoviesByGenre(json));
   };
   useEffect(() => {
     getMovieList();
