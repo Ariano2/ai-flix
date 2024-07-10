@@ -6,8 +6,12 @@ import { posterBG } from '../utils/constants';
 const Gpt = () => {
   return (
     <div>
-      <div className="fixed -z-10">
-        <img src={posterBG} alt="movie posters background" />
+      <div className="absolute -z-10 h-screen md:h-auto">
+        <img
+          className="h-screen object-cover md:h-auto"
+          src={posterBG}
+          alt="movie posters background"
+        />
       </div>
       <GptSearchBar />
       <GptMovieSuggestions />

@@ -23,6 +23,12 @@
 - Build Secondary Component
 - GPT Search Bar Created
 - Multi Language Support in Gpt Search Bar
+- Gpt Search Api Call
+- Fetched Gpt recommended movies from TMDB
+- AI movie suggestion container
+- .env file (add to gitignore)
+- Memoization
+- Responsive Site Design
 
 # Features
 

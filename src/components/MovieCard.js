@@ -6,7 +6,7 @@ const MovieCard = ({ poster_path, id }) => {
   if (!poster_path) return;
   return (
     <Link to={'/browse/movieInfo/' + id}>
-      <div className="w-48">
+      <div className="w-28 md:w-48">
         <img alt="Movie Card" src={IMG_CDN_URL + poster_path} />
       </div>
     </Link>

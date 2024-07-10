@@ -6,6 +6,8 @@ export const posterBG =
 
 export const IMG_CDN_URL = 'https://image.tmdb.org/t/p/w780/';
 
+export const TITLE_LOGO = './assets/ai-flix-high-resolution-logo.png';
+
 export const options = {
   method: 'GET',
   headers: {
