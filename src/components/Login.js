@@ -14,10 +14,14 @@ import { posterBG } from '../utils/constants';
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const email = useRef(null);
   const password = useRef(null);
   const displayName = useRef(null);
   const dispatch = useDispatch();
+  const togglePasswordDisplay = () => {
+    setShowPassword(!showPassword);
+  };
   const handleBtnClick = () => {
     const message = validateDetails(
       email.current.value,
@@ -105,12 +109,20 @@ const Login = () => {
           placeholder="Email Address"
           className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
         />
-        <input
-          type="password"
-          ref={password}
-          placeholder="Password"
-          className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
-        />
+        <div className="flex">
+          <input
+            type={showPassword === true ? 'text' : 'password'}
+            ref={password}
+            placeholder="Password"
+            className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
+          />
+          <button
+            onClick={togglePasswordDisplay}
+            className="text-lg md:text-2xl -ml-10"
+          >
+            {showPassword ? '👁' : '🙈'}
+          </button>
+        </div>
         <p className="text-red-500 font-semibold">{errorMessage}</p>
         <button
           onClick={handleBtnClick}
