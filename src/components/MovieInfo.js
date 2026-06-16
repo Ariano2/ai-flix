@@ -57,18 +57,17 @@ const MovieInfo = () => {
     const genreData = genres.map((genre) => genre.name);
     return (
       movieData && (
-        <div>
+        <div className="flex flex-col-reverse md:block">
           <div className="flex flex-col items-center md:flex md:flex-row md:items-center py-10 px-10 bg-gray-100">
             <div className="w-10/12 my-4 md:w-6/12 md:my-0 md:px-[5%]">
               <img className="h-auto" src={IMG_CDN_URL + poster_path}></img>
             </div>
-            <div className=" bg-red-200 px-4 md:px-20 pb-10">
+            <div className=" bg-red-200 md:w-6/12 px-4 md:px-20 pb-10">
               <h1 className="text-4xl py-10">
                 {original_title}{' '}
-                <span className="hidden md:inline text-lg">
+                <span className="hidden md:inline text-md md:text-lg">
                   {runtime} Minutes
                 </span>{' '}
-                <span className="hidden md:inline text-lg">({status})</span>
               </h1>
               <p className="text-lg py-4">Genres : {genreData.join(', ')}</p>
               <p className="text-md py-4">{overview}</p>
@@ -82,16 +81,21 @@ const MovieInfo = () => {
               </p>
               {/*budget/revenue is in millions of dollars*/}
               <p className="hidden md:inline text-md">
-                Budget - {(budget / 1000000).toFixed(2)} Million dollars
-                <br /> Revenue - {(revenue / 1000000).toFixed(2)} Million
-                dollars
+                Budget -{' '}
+                {budget === 0
+                  ? 'Data Unavailable'
+                  : `${(budget / 1000000).toFixed(2)} Million $`}
+                <br /> Revenue -{' '}
+                {revenue === 0
+                  ? 'Data Unavailable'
+                  : (revenue / 1000000).toFixed(2) + ' Million $'}
               </p>
             </div>
           </div>
           <div className="bg-gray-100">
             {trailer && (
               <iframe
-                className="w-full md:w-10/12 aspect-video mx-auto pb-10"
+                className="w-full md:w-10/12 aspect-video mx-auto md:pb-10"
                 src={'https://www.youtube.com/embed/' + trailer.key}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
