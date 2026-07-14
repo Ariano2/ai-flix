@@ -32,7 +32,7 @@ const SecondaryContainer = () => {
       dispatch(addMoviesByGenre(moviesByGenre));
     };
     updateStore();
-  }, [movies.genre]);
+  }, [movies.genre, movies.moviesByGenre, dispatch]);
 
   return (
     <div className=" bg-black">

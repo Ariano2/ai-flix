@@ -18,6 +18,8 @@ const usePopularMovies = () => {
 
   useEffect(() => {
     !popularMovies && getPopularMovies();
+    // fetch once on mount; already-fetched state guards against refetching
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

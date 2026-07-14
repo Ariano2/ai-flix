@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import companyLogo from '../utils/assets/ai-flix-logo.png';
 import { auth } from '../utils/firebase';
 import { signOut } from 'firebase/auth';
@@ -40,7 +40,7 @@ const Header = () => {
     });
     // unsubscribe when component unmounts
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <div className="flex items-center gap-2 flex-col md:flex md:flex-row absolute px-8 py-2 bg-gradient-to-b from-black z-30 w-full flex justify-between">

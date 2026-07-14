@@ -20,6 +20,8 @@ const useNowPlayingMovies = () => {
 
   useEffect(() => {
     !nowPlayingMovies && getNowPlayingMovies();
+    // fetch once on mount; already-fetched state guards against refetching
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

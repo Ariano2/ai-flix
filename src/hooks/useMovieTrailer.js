@@ -21,6 +21,8 @@ const useMovieTrailer = (movieId) => {
   };
   useEffect(() => {
     !trailerVideo && getMovieVideos();
+    // fetch once on mount; already-fetched state guards against refetching
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 
