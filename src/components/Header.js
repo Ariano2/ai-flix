@@ -8,8 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { addUser, removeUser } from '../utils/userSlice';
 import { userIcon } from '../utils/constants';
 import { toggleGptSearchView } from '../utils/gptSlice';
-import { setLanguage } from '../utils/configSlice';
-import { supported_languages } from '../utils/lang';
+import SearchBar from './SearchBar';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,10 +21,6 @@ const Header = () => {
       .catch((error) => {
         navigate('/error');
       });
-  };
-
-  const changeLanguage = (e) => {
-    dispatch(setLanguage(e.target.value));
   };
 
   const handleGptSearchClick = () => {
@@ -48,29 +43,18 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 flex-col md:flex md:flex-row absolute px-8 py-2 bg-gradient-to-b from-black z-10 w-full flex justify-between">
+    <div className="flex items-center gap-2 flex-col md:flex md:flex-row absolute px-8 py-2 bg-gradient-to-b from-black z-30 w-full flex justify-between">
       <img src={companyLogo} alt="Logo" className="w-32 md:w-44" />
       {user && (
-        <div className="flex gap-4 items-center">
-          {showGptSearch && (
-            <select
-              className="p-2 bg-gray-500 rounded-lg"
-              onChange={changeLanguage}
-            >
-              {supported_languages.map((lang) => {
-                return (
-                  <option key={lang.identifier} value={lang.value}>
-                    {lang.value}
-                  </option>
-                );
-              })}
-            </select>
-          )}
+        <div className="flex flex-wrap md:flex-nowrap gap-4 items-center justify-end">
+          <div className="order-last md:order-none w-full md:w-auto">
+            <SearchBar />
+          </div>
           <button
             onClick={handleGptSearchClick}
             className="py-2 px-4 bg-purple-800 rounded-lg text-white"
           >
-            {showGptSearch ? 'Browse' : 'GPT Search'}
+            {showGptSearch ? 'Browse' : 'AI Search'}
           </button>
           <span className="text-white hidden md:block">
             Hello {user?.displayName}
@@ -84,7 +68,7 @@ const Header = () => {
             onClick={handleSignOut}
             className="font-bold text-white p-2 border border-white"
           >
-            Sign Out
+            Logout
           </button>
         </div>
       )}

@@ -1,32 +1,35 @@
 import React from 'react';
 import MovieList from './MovieList';
 import { useDispatch, useSelector } from 'react-redux';
-import { options } from '../utils/constants';
 import { useEffect } from 'react';
 import { addMoviesByGenre } from '../utils/movieSlice';
+import { getMoviesByGenre } from '../utils/tmdb';
 
 const SecondaryContainer = () => {
   const dispatch = useDispatch();
   const movies = useSelector((store) => store.movies);
   const fetchGenreMovies = async (id) => {
-    const data = await fetch(
-      'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=' +
-        id,
-      options
-    );
-    const json = await data.json();
-    return json;
+    try {
+      const json = await getMoviesByGenre(id);
+      return { genreId: id, results: json.results };
+    } catch (err) {
+      return { genreId: id, results: [] };
+    }
   };
   useEffect(() => {
-    if (movies.genre === null || movies.moviesByGenre?.length === 19) {
+    if (movies.genre === null || movies.moviesByGenre !== null) {
       return;
     }
     const promisesArray = movies.genre.genres.map((genre) =>
       fetchGenreMovies(genre.id)
     );
     const updateStore = async () => {
-      const genreMovies = await Promise.all(promisesArray);
-      dispatch(addMoviesByGenre(genreMovies));
+      const genreResults = await Promise.all(promisesArray);
+      const moviesByGenre = {};
+      genreResults.forEach(({ genreId, results }) => {
+        moviesByGenre[genreId] = results;
+      });
+      dispatch(addMoviesByGenre(moviesByGenre));
     };
     updateStore();
   }, [movies.genre]);
@@ -38,12 +41,12 @@ const SecondaryContainer = () => {
         <MovieList title={'Top Rated'} movies={movies.topRatedMovies} />
         <MovieList title={'Popular'} movies={movies.popularMovies} />
         {movies.moviesByGenre &&
-          movies.genre.genres.map((genre, index) => {
+          movies.genre.genres.map((genre) => {
             return (
               <MovieList
                 title={genre.name}
                 key={genre.id}
-                movies={movies.moviesByGenre[index].results}
+                movies={movies.moviesByGenre[genre.id]}
               ></MovieList>
             );
           })}

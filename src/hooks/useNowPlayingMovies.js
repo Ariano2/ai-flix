@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { options } from '../utils/constants';
-import { addNowPlayingMovies } from '../utils/movieSlice';
+import { addNowPlayingMovies, setMoviesError } from '../utils/movieSlice';
 import { useEffect } from 'react';
+import { getNowPlayingMovies as fetchNowPlayingMovies } from '../utils/tmdb';
 
 const useNowPlayingMovies = () => {
   // fetch data from TMDB API and update the store
@@ -10,12 +10,12 @@ const useNowPlayingMovies = () => {
     (store) => store.movies.nowPlayingMovies
   );
   const getNowPlayingMovies = async () => {
-    const data = await fetch(
-      'https://api.themoviedb.org/3/movie/now_playing?page=1',
-      options
-    );
-    const json = await data.json();
-    dispatch(addNowPlayingMovies(json.results));
+    try {
+      const json = await fetchNowPlayingMovies();
+      dispatch(addNowPlayingMovies(json.results));
+    } catch (err) {
+      dispatch(setMoviesError('Could not load now playing movies.'));
+    }
   };
 
   useEffect(() => {

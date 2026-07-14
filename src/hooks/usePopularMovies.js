@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { options } from '../utils/constants';
-import { addPopularMovies } from '../utils/movieSlice';
+import { addPopularMovies, setMoviesError } from '../utils/movieSlice';
 import { useEffect } from 'react';
+import { getPopularMovies as fetchPopularMovies } from '../utils/tmdb';
 
 const usePopularMovies = () => {
   // fetch data from TMDB API and update the store
   const dispatch = useDispatch();
   const popularMovies = useSelector((store) => store.movies.popularMovies);
   const getPopularMovies = async () => {
-    const data = await fetch(
-      'https://api.themoviedb.org/3/movie/popular?page=1',
-      options
-    );
-    const json = await data.json();
-    dispatch(addPopularMovies(json.results));
+    try {
+      const json = await fetchPopularMovies();
+      dispatch(addPopularMovies(json.results));
+    } catch (err) {
+      dispatch(setMoviesError('Could not load popular movies.'));
+    }
   };
 
   useEffect(() => {

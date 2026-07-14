@@ -6,6 +6,10 @@ export const posterBG =
 
 export const IMG_CDN_URL = 'https://image.tmdb.org/t/p/w780/';
 
+export const BACKDROP_CDN_URL = 'https://image.tmdb.org/t/p/w1280/';
+
+export const PROFILE_CDN_URL = 'https://image.tmdb.org/t/p/w185/';
+
 export const TITLE_LOGO = './assets/ai-flix-high-resolution-logo.png';
 
 export const options = {
@@ -16,4 +20,9 @@ export const options = {
   },
 };
 
-export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
+export const GROQ_WORKER_URL = 'https://ai-flix-groq.ai-flix-dev.workers.dev';
+
+export const GITHUB_REPO_URL = 'https://github.com/Ariano2/ai-flix';
+
+// TODO: replace with your real LinkedIn profile URL
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/aryangosain/';

@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import VideoTitle from './VideoTitle';
 import VideoBackground from './VideoBackground';
 const MainContainer = () => {
   const movies = useSelector((store) => store.movies?.nowPlayingMovies);
+  const [replayCount, setReplayCount] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
   if (!movies) return;
   const mainMovie = movies[0];
   const { original_title, overview, id } = mainMovie;
   return (
     <div className="pt-[30%] bg-black md:pt-0">
-      <VideoTitle title={original_title} overview={overview} />
-      <VideoBackground movieId={id} />
+      <VideoTitle
+        title={original_title}
+        overview={overview}
+        onReplay={() => setReplayCount((count) => count + 1)}
+        isMuted={isMuted}
+        onToggleMute={() => setIsMuted((muted) => !muted)}
+      />
+      <VideoBackground
+        movieId={id}
+        replayCount={replayCount}
+        isMuted={isMuted}
+      />
     </div>
   );
 };

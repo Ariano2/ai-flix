@@ -7,6 +7,7 @@ import usePopularMovies from '../hooks/usePopularMovies';
 import useTopRatedMovies from './../hooks/useTopRatedMovies';
 import useGenres from '../hooks/useGenres';
 import GptSearch from './GptSearch';
+import Footer from './Footer';
 import { useSelector } from 'react-redux';
 
 const Browse = () => {
@@ -26,6 +27,7 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
+      <Footer />
       {/*
         MainContainer
           -VideoBackground

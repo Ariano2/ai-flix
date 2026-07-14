@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { validateDetails } from '../utils/validate';
+import { validateDetails, getAuthErrorMessage } from '../utils/validate';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,19 +17,27 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const email = useRef(null);
   const password = useRef(null);
+  const confirmPassword = useRef(null);
   const displayName = useRef(null);
   const dispatch = useDispatch();
   const togglePasswordDisplay = () => {
     setShowPassword(!showPassword);
   };
-  const handleBtnClick = () => {
-    const message = validateDetails(
-      email.current.value,
-      password.current.value
-    );
-    setErrorMessage(message);
-    if (message) return;
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
     if (!isSignInForm) {
+      const message = validateDetails(
+        email.current.value,
+        password.current.value
+      );
+      if (message) {
+        setErrorMessage(message);
+        return;
+      }
+      if (password.current.value !== confirmPassword.current.value) {
+        setErrorMessage('Passwords do not match.');
+        return;
+      }
       // sign up the user
       createUserWithEmailAndPassword(
         auth,
@@ -49,13 +57,11 @@ const Login = () => {
               );
             })
             .catch((error) => {
-              setErrorMessage(error.message);
+              setErrorMessage(getAuthErrorMessage(error.code));
             });
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + '-' + errorMessage);
+          setErrorMessage(getAuthErrorMessage(error.code));
         });
     } else {
       signInWithEmailAndPassword(
@@ -67,13 +73,12 @@ const Login = () => {
           // Signed in
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + '-' + errorMessage);
+          setErrorMessage(getAuthErrorMessage(error.code));
         });
     }
   };
   const toggleSignInForm = () => {
+    setErrorMessage(null);
     setIsSignInForm(!isSignInForm);
   };
   return (
@@ -87,9 +92,7 @@ const Login = () => {
         />
       </div>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
+        onSubmit={handleFormSubmit}
         className="text-white rounded-lg w-full md:w-4/12 p-12 absolute bg-black my-36 mx-auto right-0 left-0 bg-opacity-80"
       >
         <h1 className="font-bold text-2xl md:text-3xl px-2 py-4">
@@ -106,6 +109,7 @@ const Login = () => {
         <input
           type="text"
           ref={email}
+          defaultValue="test@gmail.com"
           placeholder="Email Address"
           className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
         />
@@ -113,21 +117,28 @@ const Login = () => {
           <input
             type={showPassword === true ? 'text' : 'password'}
             ref={password}
+            defaultValue="Test@123"
             placeholder="Password"
             className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
           />
           <button
+            type="button"
             onClick={togglePasswordDisplay}
             className="text-lg md:text-2xl -ml-10"
           >
             {showPassword ? '👁' : '🙈'}
           </button>
         </div>
+        {!isSignInForm && (
+          <input
+            type={showPassword === true ? 'text' : 'password'}
+            ref={confirmPassword}
+            placeholder="Re-enter Password"
+            className="p-4 my-4 bg-gray-800 border border-white w-full bg-opacity-50"
+          />
+        )}
         <p className="text-red-500 font-semibold">{errorMessage}</p>
-        <button
-          onClick={handleBtnClick}
-          className="p-4 my-6 bg-red-700 w-full rounded-lg"
-        >
+        <button type="submit" className="p-4 my-6 bg-red-700 w-full rounded-lg">
           {isSignInForm ? 'Sign In' : 'Sign Up'}
         </button>
         <p className="text-sm py-4 ">

@@ -9,6 +9,7 @@ const movieSlice = createSlice({
     trailerVideo: null,
     genre: null,
     moviesByGenre: null,
+    error: null,
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -26,8 +27,12 @@ const movieSlice = createSlice({
     addGenres: (state, action) => {
       state.genre = action.payload;
     },
+    // payload is a { [genreId]: movies[] } dictionary, not a positional array
     addMoviesByGenre: (state, action) => {
       state.moviesByGenre = action.payload;
+    },
+    setMoviesError: (state, action) => {
+      state.error = action.payload;
     },
   },
 });
@@ -40,4 +45,5 @@ export const {
   addTrailerVideo,
   addGenres,
   addMoviesByGenre,
+  setMoviesError,
 } = movieSlice.actions;
